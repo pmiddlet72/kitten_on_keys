@@ -1,0 +1,18 @@
+name: kitten_on_keys
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.13
+  - pip
+  - poetry>=1.5.0
+  - numpy>=1.24.0
+  - pip:
+    - pynput>=1.7.6
+    - python-xlib>=0.33
+    - pydbus>=0.6.0
+    - sounddevice>=0.4.6
+    - torch>=2.0.0
+    - openai-whisper>=20231117
+    - transformers>=4.35.0
+    - pyyaml>=6.0.1 
