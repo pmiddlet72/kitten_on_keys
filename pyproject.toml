@@ -1,38 +1,22 @@
-[tool.poetry]
-name = "kitten_on_keys"
+[project]
+name = "kitten-on-keys"
 version = "0.1.0"
-description = "A speech-to-text dictation application for Linux Mint/Cinnamon desktop"
-authors = ["Your Name <your.email@example.com>"]
+description = "VTT using whisper AI for RT transcription of voice-to-text in linux terminal and gui."
+authors = [
+    {name = "Phillip Middleton",email = "pmiddlet72@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-packages = [{include = "k_on_k"}]
+requires-python = ">=3.13"
+dependencies = [
+]
 
-[tool.poetry.dependencies]
-python = "^3.13"
-pynput = "^1.7.6"  # For keyboard and mouse hooks
-python-xlib = "^0.33"  # For X11 window management
-pydbus = "^0.6.0"  # For D-Bus communication
-sounddevice = "^0.4.6"  # For audio capture
-numpy = "^1.24.0"  # Required for audio processing
-torch = "^2.0.0"  # For local model inference
-openai-whisper = "^20231117"  # OpenAI's Whisper model
-transformers = "^4.35.0"  # For using HuggingFace models
-pyyaml = "^6.0.1"  # For configuration files
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.3.1"
-black = "^23.3.0"
-isort = "^5.12.0"
-flake8 = "^6.0.0"
-
-[tool.poetry.scripts]
-kitten-on-keys = "k_on_k.main:main"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 88
-
-[tool.isort]
-profile = "black"
+[tool.poetry]
+packages = [
+    { include = "k_on_k" }
+]

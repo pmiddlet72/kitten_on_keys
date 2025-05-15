@@ -45,6 +45,31 @@ source venv/bin/activate
 poetry install
 ```
 
+## Development Installation
+
+To make the `kitten-on-keys` command available anywhere within your `kok` environment without affecting your global packages, install your project in "editable" mode:
+
+```bash
+# Activate the conda environment
+conda activate kok
+
+# Install the project into the current environment in editable mode
+pip install -e .
+```
+
+Now you can run:
+
+```bash
+kitten-on-keys
+```
+
+from any directory, provided the `kok` environment is active and its `bin` is first on your `PATH`.  If needed, you can ensure that by placing this in your `~/.bashrc` after activating:
+
+```bash
+# Ensure conda env's bin comes first
+export PATH="$CONDA_PREFIX/bin:$PATH"
+```
+
 ## Usage
 
 Start the daemon service:
@@ -76,3 +101,4 @@ This project uses a vertical slice architecture to minimize dependencies between
 ## License
 
 MIT
+
