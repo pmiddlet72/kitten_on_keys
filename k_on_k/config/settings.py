@@ -39,10 +39,35 @@ def get_default_config() -> Dict[str, Any]:
             "device_index": None,  # None means default device
         },
         "speech_recognition": {
-            "model": "whisper",  # Options: whisper, huggingface, kaldi
-            "whisper": {
-                "model_size": "base",  # tiny, base, small, medium, large
+            # Choose the STT engine: whisper or faster-whisper
+            "engine": "faster-whisper",
+            "model": "turbo",  # Options for whisper: tiny, base, small, medium, large, turbo
+            # Settings for faster-whisper engine
+            "faster_whisper": {
+                "model_name": "openai/whisper-large-v3-turbo",
                 "device": "cuda" if os.environ.get("CUDA_VISIBLE_DEVICES") else "cpu",
+                "compute_type": "int8_float16",  # Options: int8, int16, int8_float16, default
+                "chunk_length_s": 1.0,
+                "beam_size": 5
+            },
+            # Mapping of voice commands to punctuation or formatting
+            "punctuation_commands": {
+                "period": ".",
+                "comma": ",",
+                "question mark": "?",
+                "exclamation point": "!",
+                "new line": "\n",
+                "dash": "-",
+                "semicolon": ";",
+                "colon": ":",
+                "open parenthesis": "(",
+                "close parenthesis": ")",
+                "open bracket": "[",
+                "close bracket": "]",
+                "open curly brace": "{",
+                "close curly brace": "}",
+                "open quote": "\"",
+                "close quote": "\""
             },
             "trigger_phrases": [
                 "k.o.k. start",

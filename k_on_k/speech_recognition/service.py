@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Optional, Callable, Union
 import numpy as np
 
 from k_on_k.speech_recognition.whisper_service import WhisperService
+from k_on_k.speech_recognition.faster_whisper_service import FasterWhisperService
 
 logger = logging.getLogger(__name__)
 
@@ -77,13 +78,18 @@ class SpeechRecognitionService:
             self.processing_thread.join(timeout=2.0)
     
     def _initialize_model(self):
-        """Initialize the speech-to-text model based on configuration."""
-        if self.model_type == "whisper":
+        """Initialize the speech-to-text model based on configuration engine."""
+        engine = self.stt_config.get("engine", "whisper").lower()
+        if engine == "whisper":
             logger.info("Initializing Whisper model")
             self.whisper_service = WhisperService(self.config)
             self.active_model = self.whisper_service
+        elif engine in ("faster-whisper", "faster_whisper"):  # support both keys
+            logger.info("Initializing Faster-Whisper model")
+            self.fw_service = FasterWhisperService(self.config)
+            self.active_model = self.fw_service
         else:
-            logger.warning(f"Unsupported model type: {self.model_type}, falling back to Whisper")
+            logger.warning(f"Unsupported engine: {engine}, falling back to Whisper")
             self.whisper_service = WhisperService(self.config)
             self.active_model = self.whisper_service
     

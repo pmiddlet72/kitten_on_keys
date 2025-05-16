@@ -52,8 +52,19 @@ class KittenOnKeys:
         self.hotkey_service.on_dictation_hotkey = self.toggle_dictation
         # Wrap transcription callback to log and then insert text
         def _handle_transcription(text):
-            logger.info(f"Transcribed text: {text}")
-            self.text_service.insert_text(text)
+            key = text.strip().lower()
+            punct_map = self.config.get("speech_recognition", {}).get("punctuation_commands", {})
+            if key in punct_map:
+                symbol = punct_map[key]
+                logger.info(f"Punctuation command detected: {key} -> {symbol}")
+                # Handle newline separately
+                if symbol == "\n":
+                    self.text_service.type_command('new_line')
+                else:
+                    self.text_service.insert_text(symbol)
+            else:
+                logger.info(f"Transcribed text: {text}")
+                self.text_service.insert_text(text)
         self.stt_service.on_transcription = _handle_transcription
         self.audio_service.on_audio_data = self.stt_service.process_audio
         
